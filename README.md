@@ -21,10 +21,8 @@ sudo nmcli con mod br-vlan17 ipv4.method manual ipv4.addresses 10.2.17.224/24
 
 Create bridges for clab
 ```
-sudo nmcli connection add type bridge con-name R2-R4 ifname R2-R4
-sudo nmcli connection add type bridge con-name R3-R5 ifname R3-R5
-sudo nmcli con up id R2-R4
-sudo nmcli con up id R3-R5
+sudo ip link add R11-R12 type bridge 
+sudo ip link set R11-R12 up
 ```
 
 Install Dockers (Rocky Linux release 9.2)
@@ -57,4 +55,10 @@ You need to have the adaptor for the specific release of the NE and the common
 ```
 cd NSP-CN-23.8.0-rel.2707/tools/mdm/
 ./adaptor-suite.bash --install /tmp/sros-common-23_8_v3.zip /tmp/sros-23-3-r1-23_8_v2.zip /tmp/srl-common-23_8_v2.zip /tmp/srl-23-7-1-23_8.zip
+```
+
+### Create routes in K801 for 172.18.1.0/24
+
+```
+ip add route 172.18.1.0/24 via 10.2.16.224
 ```

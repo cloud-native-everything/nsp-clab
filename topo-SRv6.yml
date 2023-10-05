@@ -1,9 +1,8 @@
-name: nsp_clab
+name: nsp
 mgmt:
   bridge: br-vlan17
   network: nsp_clab_mgmt
   ipv4-subnet: 10.2.17.0/24
-  ipv4-gw: 10.2.17.1
 topology:
   kinds:
     vr-sros:
@@ -17,31 +16,32 @@ topology:
       kind: vr-sros
       mgmt-ipv4: 10.2.17.20
       license: license-vsrnrc.txt  
+      startup-config: startup-configs-SRv6/nsp-sros-VSR-NRC-01.cfg      
 # main 6 nodes
     R1:      
       kind: vr-sros
       mgmt-ipv4: 10.2.17.9
-      startup-config: startup-configs/nsp-sros-R1.cfg
+      startup-config: startup-configs-SRv6/nsp-sros-R1.cfg
     R2:
       kind: vr-sros
       mgmt-ipv4: 10.2.17.2
-      startup-config: startup-configs/nsp-sros-R2.cfg      
+      startup-config: startup-configs-SRv6/nsp-sros-R2.cfg      
     R3:
       kind: vr-sros
       mgmt-ipv4: 10.2.17.3
-      startup-config: startup-configs/nsp-sros-R3.cfg       
+      startup-config: startup-configs-SRv6/nsp-sros-R3.cfg       
     R4:
       kind: vr-sros
       mgmt-ipv4: 10.2.17.4
-      startup-config: startup-configs/nsp-sros-R4.cfg       
+      startup-config: startup-configs-SRv6/nsp-sros-R4.cfg       
     R5:
       kind: vr-sros
       mgmt-ipv4: 10.2.17.5
-      startup-config: startup-configs/nsp-sros-R5.cfg       
+      startup-config: startup-configs-SRv6/nsp-sros-R5.cfg       
     R6:
       kind: vr-sros
       mgmt-ipv4: 10.2.17.6
-      startup-config: startup-configs/nsp-sros-R6.cfg       
+      startup-config: startup-configs-SRv6/nsp-sros-R6.cfg       
     R7:
       kind: vr-sros
       mgmt-ipv4: 10.2.17.7
@@ -49,64 +49,64 @@ topology:
     R11:
       kind: vr-sros
       mgmt-ipv4: 10.2.17.11
-      startup-config: startup-configs/nsp-sros-R11.cfg       
+      startup-config: startup-configs-SRv6/nsp-sros-R11.cfg       
 
     R12:
       kind: vr-sros
       mgmt-ipv4: 10.2.17.12
-      startup-config: startup-configs/nsp-sros-R12.cfg       
+      startup-config: startup-configs-SRv6/nsp-sros-R12.cfg       
 # area 2
     R21:
       kind: vr-sros
       mgmt-ipv4: 10.2.17.21
-      startup-config: startup-configs/nsp-sros-R21.cfg       
+      startup-config: startup-configs-SRv6/nsp-sros-R21.cfg       
     R22:
       kind: vr-sros
       mgmt-ipv4: 10.2.17.22 
-      startup-config: startup-configs/nsp-sros-R22.cfg       
+      startup-config: startup-configs-SRv6/nsp-sros-R22.cfg       
 # area 3
     R31:
       kind: vr-sros
       mgmt-ipv4: 10.2.17.31
-      startup-config: startup-configs/nsp-sros-R31.cfg       
+      startup-config: startup-configs-SRv6/nsp-sros-R31.cfg       
     R32:
       kind: vr-sros
       mgmt-ipv4: 10.2.17.32      
-      startup-config: startup-configs/nsp-sros-R32.cfg       
+      startup-config: startup-configs-SRv6/nsp-sros-R32.cfg       
 
 # DC Network nodes
     LEAF-DC-1:
       kind: srl
       mgmt-ipv4: 10.2.17.121 
-      startup-config: startup-configs/nsp-srlinux-LEAF-DC-1.json
+      startup-config: startup-configs-SRv6/nsp-srlinux-LEAF-DC-1.json
     LEAF-DC-2:
       kind: srl
       mgmt-ipv4: 10.2.17.122      
-      startup-config: startup-configs/nsp-srlinux-LEAF-DC-2.json         
+      startup-config: startup-configs-SRv6/nsp-srlinux-LEAF-DC-2.json         
     SPINE-DC-1:
       kind: srl
       mgmt-ipv4: 10.2.17.123 
-      startup-config: startup-configs/nsp-srlinux-SPINE-DC-1.json      
+      startup-config: startup-configs-SRv6/nsp-srlinux-SPINE-DC-1.json      
     SPINE-DC-2:
       kind: srl
       mgmt-ipv4: 10.2.17.124 
-      startup-config: startup-configs/nsp-srlinux-SPINE-DC-2.json      
+      startup-config: startup-configs-SRv6/nsp-srlinux-SPINE-DC-2.json      
     BORDER-DC:
       kind: srl
       mgmt-ipv4: 10.2.17.125 
-      startup-config: startup-configs/nsp-srlinux-BORDER-DC.json      
+      startup-config: startup-configs-SRv6/nsp-srlinux-BORDER-DC.json      
 
 # Edge 1 Network nodes
     LEAF-E1-1:
       kind: srl
       mgmt-ipv4: 10.2.17.131 
-      startup-config: startup-configs/nsp-srlinux-LEAF-E1-1.json       
+      startup-config: startup-configs-SRv6/nsp-srlinux-LEAF-E1-1.json       
 
 # Edge 2 Network nodes
     LEAF-E2-1:
       kind: srl
       mgmt-ipv4: 10.2.17.141 
-      startup-config: startup-configs/nsp-srlinux-LEAF-E2-1.json       
+      startup-config: startup-configs-SRv6/nsp-srlinux-LEAF-E2-1.json       
 # bridge to VSR-NRC
   
   # bridge for TWAMP-LINK-R2-R4

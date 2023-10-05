@@ -1,0 +1,78 @@
+name: nsp
+mgmt:
+  bridge: br-vlan17
+  network: nsp_clab_mgmt
+  ipv4-subnet: 10.2.17.0/24
+topology:
+  kinds:
+    vr-sros:
+      image: vrnetlab/vr-sros:23.3.R3
+      license: license-sros23.txt
+    srl:
+      image: ghcr.io/nokia/srlinux   
+      type: ixrd3 
+  nodes:
+    VSR-NRC-01:
+      kind: vr-sros
+      mgmt-ipv4: 10.2.17.20
+      license: license-vsrnrc.txt  
+      startup-config: startup-configs-SR/nsp-sros-VSR-NRC-01.cfg      
+    R1:      
+      kind: vr-sros
+      mgmt-ipv4: 10.2.17.9
+      startup-config: startup-configs-SR/nsp-sros-R1.cfg
+    R2:
+      kind: vr-sros
+      mgmt-ipv4: 10.2.17.2
+      startup-config: startup-configs-SR/nsp-sros-R2.cfg      
+    R11:
+      kind: vr-sros
+      mgmt-ipv4: 10.2.17.11
+      startup-config: startup-configs-SR/nsp-sros-R11.cfg       
+
+    R12:
+      kind: vr-sros
+      mgmt-ipv4: 10.2.17.12
+      startup-config: startup-configs-SR/nsp-sros-R12.cfg       
+    R21:
+      kind: vr-sros
+      mgmt-ipv4: 10.2.17.21
+      startup-config: startup-configs-SR/nsp-sros-R21.cfg       
+    R22:
+      kind: vr-sros
+      mgmt-ipv4: 10.2.17.22 
+      startup-config: startup-configs-SR/nsp-sros-R22.cfg       
+    R31:
+      kind: vr-sros
+      mgmt-ipv4: 10.2.17.31
+      startup-config: startup-configs-SR/nsp-sros-R31.cfg       
+    R32:
+      kind: vr-sros
+      mgmt-ipv4: 10.2.17.32      
+      startup-config: startup-configs-SR/nsp-sros-R32.cfg  
+
+
+  # bridge for TWAMP-LINK-R11-R12
+    R11-R12:
+      kind: bridge
+
+
+  links:
+    - endpoints: ["R1:eth1","R11:eth1"]
+    - endpoints: ["R1:eth2","R21:eth1"]
+    - endpoints: ["R1:eth3","R31:eth1"]          
+    - endpoints: ["R2:eth1","R12:eth1"]
+    - endpoints: ["R2:eth2","R22:eth1"]
+    - endpoints: ["R2:eth3","R32:eth1"]  
+    - endpoints: ["R11:eth2","R21:eth2"]
+    - endpoints: ["R21:eth3","R22:eth2"]
+    - endpoints: ["R22:eth3","R32:eth2"]
+    - endpoints: ["R32:eth3","R31:eth2"]
+
+# Bridge
+#    - endpoints: ["R11:eth3","R11-R12:eth1"]
+#    - endpoints: ["R12:eth2","R11-R12:eth2"]    
+    - endpoints: ["R11:eth3","R12:eth2"]   #Temporary
+
+# NCR
+    - endpoints: ["R1:eth4","VSR-NRC-01:eth1"]
