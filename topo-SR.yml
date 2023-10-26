@@ -53,8 +53,8 @@ topology:
 
 
   # bridge for TWAMP-LINK-R11-R12
-    R11-R12:
-      kind: bridge
+  #    R11-R12:
+  #      kind: bridge
 
 
   links:
