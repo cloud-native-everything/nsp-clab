@@ -1,12 +1,11 @@
 name: nsp
 mgmt:
-  bridge: br-vlan17
   network: nsp_clab_mgmt
-  ipv4-subnet: 10.2.17.0/24
+  ipv4-subnet: 172.20.1.0/24
 topology:
   kinds:
     vr-sros:
-      image: vrnetlab/vr-sros:23.3.R3
+      image: vrnetlab/vr-sros:23.7.R1
       license: license-sros23.txt
     srl:
       image: ghcr.io/nokia/srlinux   
@@ -14,41 +13,42 @@ topology:
   nodes:
     VSR-NRC-01:
       kind: vr-sros
-      mgmt-ipv4: 10.2.17.20
+      mgmt-ipv4: 172.20.1.20
+      image: vrnetlab/vr-sros:23.7.R1
       license: license-vsrnrc.txt  
       startup-config: startup-configs-SR/nsp-sros-VSR-NRC-01.cfg      
     R1:      
       kind: vr-sros
-      mgmt-ipv4: 10.2.17.9
+      mgmt-ipv4: 172.20.1.9
       startup-config: startup-configs-SR/nsp-sros-R1.cfg
     R2:
       kind: vr-sros
-      mgmt-ipv4: 10.2.17.2
+      mgmt-ipv4: 172.20.1.2
       startup-config: startup-configs-SR/nsp-sros-R2.cfg      
     R11:
       kind: vr-sros
-      mgmt-ipv4: 10.2.17.11
+      mgmt-ipv4: 172.20.1.11
       startup-config: startup-configs-SR/nsp-sros-R11.cfg       
 
     R12:
       kind: vr-sros
-      mgmt-ipv4: 10.2.17.12
+      mgmt-ipv4: 172.20.1.12
       startup-config: startup-configs-SR/nsp-sros-R12.cfg       
     R21:
       kind: vr-sros
-      mgmt-ipv4: 10.2.17.21
+      mgmt-ipv4: 172.20.1.21
       startup-config: startup-configs-SR/nsp-sros-R21.cfg       
     R22:
       kind: vr-sros
-      mgmt-ipv4: 10.2.17.22 
+      mgmt-ipv4: 172.20.1.22 
       startup-config: startup-configs-SR/nsp-sros-R22.cfg       
     R31:
       kind: vr-sros
-      mgmt-ipv4: 10.2.17.31
+      mgmt-ipv4: 172.20.1.31
       startup-config: startup-configs-SR/nsp-sros-R31.cfg       
     R32:
       kind: vr-sros
-      mgmt-ipv4: 10.2.17.32      
+      mgmt-ipv4: 172.20.1.32      
       startup-config: startup-configs-SR/nsp-sros-R32.cfg  
 
 

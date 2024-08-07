@@ -3,9 +3,9 @@
 # Built on Wed May 31 12:09:13 PDT 2023 by builder in /builds/233B/R3/panos/main/sros
 # Configuration format version 23.3 revision 0
 
-# Generated 2024-01-18T16:10:45.7Z by admin from 172.31.255.29
-# Commit ID 30
-#   Committed 2024-01-18T16:10:36.4Z by admin (MD-CLI) from 172.31.255.29
+# Generated 2023-10-11T19:17:12.3Z by admin from 172.31.255.29
+# Commit ID 59
+#   Committed 2023-10-11T19:17:09.4Z by admin (MD-CLI) from 172.31.255.29
 
 configure {
     card 1 {
@@ -470,60 +470,6 @@ configure {
             path "hopless" {
                 admin-state enable
             }
-            lsp "pccLspCloneTest-1-61" {
-                admin-state enable
-                type p2p-rsvp
-                from 1.1.1.1
-                to 1.1.1.2
-                pce-control true
-                pce-report true
-                path-computation-method pce
-                metric-type te
-                egress-statistics {
-                    admin-state enable
-                }
-                path-profile 1 {
-                    path-group 61
-                }
-                primary "hopless" {
-                }
-            }
-            lsp "pccLspCloneTest-2-61" {
-                admin-state enable
-                type p2p-rsvp
-                from 1.1.1.1
-                to 1.1.1.2
-                pce-control true
-                pce-report true
-                path-computation-method pce
-                metric-type te
-                egress-statistics {
-                    admin-state enable
-                }
-                path-profile 1 {
-                    path-group 61
-                }
-                primary "hopless" {
-                }
-            }
-            lsp "pccLspCloneTest-3-62" {
-                admin-state enable
-                type p2p-rsvp
-                from 1.1.1.1
-                to 1.1.1.2
-                pce-control true
-                pce-report true
-                path-computation-method pce
-                metric-type te
-                egress-statistics {
-                    admin-state enable
-                }
-                path-profile 1 {
-                    path-group 62
-                }
-                primary "hopless" {
-                }
-            }
         }
         pcep {
             pcc {
@@ -823,11 +769,6 @@ persistent-indices {
         router-name "Base" interface-name "to_R21" vrtr-id 1 if-index 4
         router-name "Base" interface-name "to_R31" vrtr-id 1 if-index 5
     }
-    mpls-lsp-index {
-        lsp-name "pccLspCloneTest-1-61" type 2 lsp-index 13
-        lsp-name "pccLspCloneTest-2-61" type 2 lsp-index 15
-        lsp-name "pccLspCloneTest-3-62" type 2 lsp-index 14
-    }
     mpls-path-index {
         router-id 1 path-name "hopless" path-index 2
     }
@@ -858,4 +799,4 @@ persistent-indices {
     }
 }
 
-# Finished 2024-01-18T16:10:45.7Z
+# Finished 2023-10-11T19:17:12.3Z
