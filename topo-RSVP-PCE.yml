@@ -9,8 +9,14 @@ topology:
       license: license-sros23.txt
     srl:
       image: ghcr.io/nokia/srlinux   
-      type: ixrd3 
+      type: ixrd3
+    labnode:
+      image: netlab-node:0.1    
   nodes:
+    linux01:
+      kind: labnode
+    linux02:
+      kind: labnode
     VSR-NRC-01:
       kind: vr-sros
       mgmt-ipv4: 172.20.1.20
@@ -59,9 +65,11 @@ topology:
 
   links:
     - endpoints: ["R1:eth1","R11:eth1"]
+    - endpoints: ["R1:eth10","linux01:eth1"]
     - endpoints: ["R1:eth2","R21:eth1"]
     - endpoints: ["R1:eth3","R31:eth1"]          
     - endpoints: ["R2:eth1","R12:eth1"]
+    - endpoints: ["R2:eth10","linux02:eth1"]
     - endpoints: ["R2:eth2","R22:eth1"]
     - endpoints: ["R2:eth3","R32:eth1"]  
     - endpoints: ["R11:eth2","R21:eth2"]
