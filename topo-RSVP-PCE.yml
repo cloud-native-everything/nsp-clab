@@ -10,13 +10,13 @@ topology:
     srl:
       image: ghcr.io/nokia/srlinux   
       type: ixrd3
-    labnode:
-      image: netlab-node:0.1    
   nodes:
     linux01:
-      kind: labnode
+      kind: linux
+      image: netlab-node:0.1    
     linux02:
-      kind: labnode
+      kind: linux
+      image: netlab-node:0.1    
     VSR-NRC-01:
       kind: vr-sros
       mgmt-ipv4: 172.20.1.20
