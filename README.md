@@ -80,30 +80,22 @@ This Helm chart deploys `iperf3` server and client instances to Kubernetes clust
 To deploy the `iperf3` servers, run the following command:
 
 ```bash
-helm install my-iperf3-server iperf3-chart --set image.serverRepository=iperf3-server --set image.tag=0.1a --set server.enabled=true --set client.enabled=false
+sudo kubectl config use-context kind-k8s01
+sudo helm install my-iperf3-client iperf3-chart --set server.enabled=false -f values.yaml
 ```
-
-This command deploys four `iperf3` server instances, each on a different NodePort. The servers will be accessible via the NodePorts defined in the `values.yaml`.
 
 #### 2. Deploying `iperf3` Clients
 
 To deploy the `iperf3` clients, run the following command:
 
 ```bash
-helm install my-iperf3-client iperf3-chart --set image.clientRepository=iperf3-client --set image.tag=0.1a --set client.enabled=true --set server.enabled=false --set client.serverIPs={"<node-ip>","<node-ip>","<node-ip>","<node-ip>"} --set client.serverPorts={30001,30002,30003,30004}
+sudo kubectl config use-context kind-k8s02
+sudo helm install my-iperf3-server iperf3-chart --set client.enabled=false -f values.yaml
 ```
 
 Replace `<node-ip>` with the actual IP address of the node where the `iperf3` servers are running.
 
-#### 3. Deploying Both Servers and Clients Simultaneously
-
-If you need to deploy both `iperf3` servers and clients at the same time:
-
-```bash
-helm install my-iperf3 iperf3-chart --set image.serverRepository=iperf3-server --set image.clientRepository=iperf3-client --set image.tag=0.1a --set server.enabled=true --set client.enabled=true --set client.serverIPs={"<node-ip>","<node-ip>","<node-ip>","<node-ip>"} --set client.serverPorts={30001,30002,30003,30004}
-```
-
-#### 4. Uninstalling the Helm Release
+#### 3. Uninstalling the Helm Release
 
 To uninstall the `iperf3` Helm release:
 
@@ -166,5 +158,92 @@ client:
 To apply changes to the Helm chart configuration, update the `values.yaml` file as needed, and then redeploy the Helm release using the `helm upgrade` command:
 
 ```bash
-helm upgrade my-iperf3-server iperf3-chart --set image.serverRepository=iperf3-server --set image.tag=0.1a
+sudo kubectl config use-context kind-k8s02
+sudo helm upgrade my-iperf3-server iperf3-chart --set client.enabled=false -f values.yaml
+sudo kubectl config use-context kind-k8s01
+sudo helm upgrade my-iperf3-client iperf3-chart --set server.enabled=false -f values.yaml
 ```
+
+### Custom Configuration Example: Deploying 12 Instances
+
+To deploy 12 `iperf3` server instances with corresponding clients, you can use a custom values file like the following:
+
+```yaml
+image:
+  clientRepository: iperf3-client
+  serverRepository: iperf3-server
+  tag: 0.1a
+  pullPolicy: IfNotPresent
+
+server:
+  enabled: true
+  instances:
+    - name: iperf3-server-1
+      port: 30001
+    - name: iperf3-server-2
+      port: 30002
+    - name: iperf3-server-3
+      port: 30003
+    - name: iperf3-server-4
+      port: 30004
+    - name: iperf3-server-5
+      port: 30005
+    - name: iperf3-server-6
+      port: 30006
+    - name: iperf3-server-7
+      port: 30007
+    - name: iperf3-server-8
+      port: 30008
+    - name: iperf3-server-9
+      port: 30009
+    - name: iperf3-server-10
+      port: 30010
+    - name: iperf3-server-11
+      port: 30011
+    - name: iperf3-server-12
+      port: 30012
+  containerPort: 5201
+
+client:
+  enabled: true
+  replicas: 12
+  flows: 4
+  duration: 0  # 0 means run indefinitely
+  serverIPs:
+    - 172.254.102.101
+    - 172.254.102.101
+    - 172.254.102.101
+    - 172.254.102.101
+    - 172.254.102.101
+    - 172.254.102.101
+    - 172.254.102.101
+    - 172.254.102.101
+    - 172.254.102.101
+    - 172.254.102.101
+    - 172.254.102.101
+    - 172.254.102.101
+  serverPorts:
+    - 30001
+    - 30002
+    - 30003
+    - 30004
+    - 30005
+    - 30006
+    - 30007
+    - 30008
+    - 30009
+    - 30010
+    - 30011
+    - 30012
+```
+
+To use this configuration, save it as `custom-values.yaml` and deploy the Helm chart with:
+
+```bash
+sudo kubectl config use-context kind-k8s02
+sudo helm install my-iperf3-server iperf3-chart --set client.enabled=false -f custom-values.yaml
+sudo kubectl config use-context kind-k8s01
+sudo helm install my-iperf3-client iperf3-chart --set server.enabled=false -f custom-values.yaml
+```
+
+This will deploy 12 `iperf3` server instances and 12 `iperf3` client instances, each connecting to a unique server.
