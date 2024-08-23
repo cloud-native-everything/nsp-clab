@@ -62,3 +62,109 @@ sudo modprobe ip6_tables
 ```
 
 Now it's time to play
+
+## iperf3 Helm Chart
+
+This Helm chart deploys `iperf3` server and client instances to Kubernetes clusters. It provides a flexible setup for deploying multiple server instances across different NodePorts and corresponding clients that connect to those server instances.
+
+### Prerequisites
+
+- Kubernetes cluster
+- Helm 3.x
+- Local Docker images for `iperf3-client` and `iperf3-server` available in the cluster nodes
+
+### Installation
+
+#### 1. Deploying `iperf3` Servers
+
+To deploy the `iperf3` servers, run the following command:
+
+```bash
+helm install my-iperf3-server iperf3-chart --set image.serverRepository=iperf3-server --set image.tag=0.1a --set server.enabled=true --set client.enabled=false
+```
+
+This command deploys four `iperf3` server instances, each on a different NodePort. The servers will be accessible via the NodePorts defined in the `values.yaml`.
+
+#### 2. Deploying `iperf3` Clients
+
+To deploy the `iperf3` clients, run the following command:
+
+```bash
+helm install my-iperf3-client iperf3-chart --set image.clientRepository=iperf3-client --set image.tag=0.1a --set client.enabled=true --set server.enabled=false --set client.serverIPs={"<node-ip>","<node-ip>","<node-ip>","<node-ip>"} --set client.serverPorts={30001,30002,30003,30004}
+```
+
+Replace `<node-ip>` with the actual IP address of the node where the `iperf3` servers are running.
+
+#### 3. Deploying Both Servers and Clients Simultaneously
+
+If you need to deploy both `iperf3` servers and clients at the same time:
+
+```bash
+helm install my-iperf3 iperf3-chart --set image.serverRepository=iperf3-server --set image.clientRepository=iperf3-client --set image.tag=0.1a --set server.enabled=true --set client.enabled=true --set client.serverIPs={"<node-ip>","<node-ip>","<node-ip>","<node-ip>"} --set client.serverPorts={30001,30002,30003,30004}
+```
+
+#### 4. Uninstalling the Helm Release
+
+To uninstall the `iperf3` Helm release:
+
+```bash
+helm uninstall my-iperf3-server
+```
+
+### Configuration
+
+The chart can be customized using the following parameters in the `values.yaml` file:
+
+- **image.serverRepository**: Docker image for the `iperf3` server.
+- **image.clientRepository**: Docker image for the `iperf3` client.
+- **image.tag**: Tag for both the server and client Docker images.
+- **server.enabled**: Enable or disable the deployment of server instances.
+- **client.enabled**: Enable or disable the deployment of client instances.
+- **server.instances**: List of server instances, each with a unique name and NodePort.
+- **client.serverIPs**: List of server IPs where each client instance will connect.
+- **client.serverPorts**: List of NodePorts corresponding to each server instance.
+
+#### Example `values.yaml`:
+
+```yaml
+image:
+  clientRepository: iperf3-client
+  serverRepository: iperf3-server
+  tag: 0.1a
+  pullPolicy: IfNotPresent
+
+server:
+  enabled: true
+  instances:
+    - name: iperf3-server-1
+      port: 30001
+    - name: iperf3-server-2
+      port: 30002
+    - name: iperf3-server-3
+      port: 30003
+    - name: iperf3-server-4
+      port: 30004
+  containerPort: 5201
+
+client:
+  enabled: true
+  replicas: 4
+  flows: 4
+  duration: 0
+  serverIPs:
+    - 172.254.102.101
+    - 172.254.102.101
+    - 172.254.102.101
+    - 172.254.102.101
+  serverPorts:
+    - 30001
+    - 30002
+    - 30003
+    - 30004
+```
+
+To apply changes to the Helm chart configuration, update the `values.yaml` file as needed, and then redeploy the Helm release using the `helm upgrade` command:
+
+```bash
+helm upgrade my-iperf3-server iperf3-chart --set image.serverRepository=iperf3-server --set image.tag=0.1a
+```
